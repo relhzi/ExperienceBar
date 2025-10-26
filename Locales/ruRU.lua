@@ -8,6 +8,7 @@ L["OPTION_LOCK"]                = "Закрепить"
 L["OPTION_HIDE"]                = "Скрыть"
 L["OPTION_EXTRA"]               = "Доп. полоса и текст"
 L["DESC_COMMANDS"]              = "Команды чата – |cffffff00/eb|r, |cffffff00/expbar|r, |cffffff00/experiencebar|r."
+L["DESC_SOURCE"]                = "Нашли баг? – |cffffff00github.com/relhzi/ExperienceBar|r."
 
 L["OPTION_DESIGN"]              = "Оформление"
 L["OPTION_COLORS"]              = "Цвета"

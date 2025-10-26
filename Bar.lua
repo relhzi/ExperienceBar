@@ -84,14 +84,12 @@ function Bar: OnEnable ()
     self.PREVIEW_XPMAX = 1000
 
     local function OnOptionsOpen() 
-        print("OnOptionsOpen")
         Bar.isPreviewEnabled = true 
         Bar:Update()
         Bar.previewTimer = Bar:ScheduleRepeatingTimer(function () Bar:Update() end, 7)
     end
     
     local function OnOptionsHide() 
-        print("OnOptionsHide")
         Bar.isPreviewEnabled = false 
         Bar:CancelTimer(Bar.previewTimer)
         Bar:StopAnimation()
@@ -128,7 +126,6 @@ function Bar: ApplyOptions ()
     bar.container:SetPoint("BOTTOMLEFT", db.positionX , db.positionY)
 
     --- background
-    -- bar.container.bg:SetVertexColor(db.bgColor.r, db.bgColor.g, db.bgColor.b, db.bgColor.a)
     bar.container.bg:SetTexture(db.bgColor.r, db.bgColor.g, db.bgColor.b, db.bgColor.a)
     
     --- border
@@ -180,15 +177,9 @@ function Bar: Update(event)
     if self.isPreviewEnabled then
         xp = self.PREVIEW_XP
         xpmax = self.PREVIEW_XPMAX
-        -- bar.status.xpprev = bar.status:GetValue(xp)
-        -- bar.status.xpmaxprev = select(2, bar.status:GetMinMaxValues())
     else
         xp = UnitXP("player")
         xpmax = UnitXPMax("player")
-        -- bar.status:SetMinMaxValues(0, bar.status.xpmaxprev)
-        -- bar.status:SetValue(bar.status.xpprev)
-        -- bar.status.xpprev = nil
-        -- bar.status.xpmaxprev = nil
     end
 
     text = ""
@@ -266,14 +257,6 @@ function Bar: ExtraUpdate()
     extratext:Show()
     extrastatus:Show()
 
-    -- local function onAnimationEnd ()
-    --     extratext:Hide()
-    --     extrastatus:Hide()
-    --     extrastatus.xpprev = nil
-    --     extrastatus.xpmax_prev = nil
-    --     extrastatus.timer = nil
-    -- end
-
     local function onTimerEnd ()
         if not extrastatus.scaleAnim then
             extrastatus.scaleAnim = extrastatus.animGroup:CreateAnimation("Scale")
@@ -286,8 +269,8 @@ function Bar: ExtraUpdate()
         if not extrastatus.alphaAnim then
             extrastatus.alphaAnim = extrastatus.animGroup:CreateAnimation("Alpha")
             extrastatus.alphaAnim:SetChange(-1)
-            extrastatus.alphaAnim:SetStartDelay(2)
-            extrastatus.alphaAnim:SetDuration(1)
+            extrastatus.alphaAnim:SetStartDelay(2.7)
+            extrastatus.alphaAnim:SetDuration(0.3)
             extrastatus.alphaAnim:SetSmoothing("IN_OUT")
         end
         if not extratext.alphaAnim then

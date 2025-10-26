@@ -62,6 +62,12 @@ function Options: GetGeneralOptions ()
                 type = "description",
                 fontSize = "medium",
                 name = L["DESC_COMMANDS"]
+            },
+            desc_source = {
+                order = order + 8,
+                type = "description",
+                fontSize = "medium",
+                name = L["DESC_SOURCE"]
             }
         }
     }

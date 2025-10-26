@@ -8,6 +8,7 @@ L["OPTION_LOCK"]                = "Lock"
 L["OPTION_HIDE"]                = "Hide"
 L["OPTION_EXTRA"]               = "Extra bar & text"
 L["DESC_COMMANDS"]              = "Chat commands – |cffffff00/eb|r, |cffffff00/expbar|r, |cffffff00/experiencebar|r."
+L["DESC_SOURCE"]                = "Found a bug? – |cffffff00github.com/relhzi/ExperienceBar|r."
 
 L["OPTION_DESIGN"]              = "Design"
 L["OPTION_COLORS"]              = "Colors"
