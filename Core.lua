@@ -13,25 +13,25 @@ function ExperienceBar: OnInitialize ()
     local defaults = {
         profile = {
             width = 400,
-            height = 50,
+            height = 30,
             positionX = 400,
             positionY = 400,
             isHidden = true,
             isLocked = true,
             isExtraEnabled = true,
-            bgColor = { r = 1, g = 0.89, b = 0.67, a = 0.75 },
-            barColor = { r = 0.98, g = 1, b = 0, a = 1 },
-            textColor = { r = 0.89, g = 9.92, b = 0.86, a = 1 },
-            borderColor = { r = 1, g = 0.67, b = 0.22, a = 1 },
-            extraBarColor = { r = 1, g = 0.92, b = 0.25, a = 0.68 },
-            extraTextColor = { r = 0.87, g = 1, b = 0.48, a = 1 },
-            textSize = 20,
+            bgColor = { r = 1, g = 1, b = 1, a = 0.6 },
+            barColor = { r = 0.5, g = 0, b = 0, a = 1 },
+            textColor = { r = 1, g = 1, b = 1, a = 1 },
+            borderColor = { r = 0, g = 0, b = 0, a = 1 },
+            extraBarColor = { r = 0.8, g = 0, b = 0, a = 0.7 },
+            extraTextColor = { r = 0.8, g = 0, b = 0, a = 0.7 },
+            textSize = 18,
             textDisplayAs = "NUMBER",
-            textFont = "Skurri",
-            barTexture = "Blizzard",
-            borderTexture = "Blizzard Tooltip"
+            textFont = "Arial Narrow",
+            barTexture = "Eb-Ruby",
+            borderTexture = "None"
         }
     }
-
+    self.defaults = defaults.profile
     self.db = AceDB:New("ExperienceBarDB", defaults, true)
 end

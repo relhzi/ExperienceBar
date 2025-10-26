@@ -369,5 +369,3 @@ Options.SetterOption = function (info, ...)
 
     Options:SendMessage(Options.OPTION_CHANGED_MESSAGE)
 end
-
--- ПРИ СМЕНЕ ПРОФИЛЯ ДОЛЖНЫ ПРИМЕНЯТЬСЯ НАСТРОЙКИ

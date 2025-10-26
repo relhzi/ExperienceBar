@@ -5,7 +5,8 @@ local ExperienceBar = AceAddon:GetAddon("ExperienceBar")
 local Bar = ExperienceBar:GetModule("Bar")
 local Options = ExperienceBar:GetModule("Options")
 
-function Bar: OnEnable ()
+function Bar: OnEnable () 
+    local defaults = ExperienceBar.defaults
     
     local container = CreateFrame("Frame", nil, UIParent)
     container:SetScript("OnDragStart", self.DragStart)
@@ -20,6 +21,7 @@ function Bar: OnEnable ()
     status:SetPoint("TOPLEFT", container, "TOPLEFT", 0, 0)
     status:SetPoint("BOTTOMRIGHT", container, "BOTTOMRIGHT", 0, 0)
     status:SetFrameLevel(container:GetFrameLevel() + 1)
+    status:SetStatusBarTexture(Options.STATUSBAR[defaults.barTexture])
 
     local extrastatus = CreateFrame("Frame", nil, container)
     extrastatus:SetPoint("TOP", status, "TOP", 0, 0)
@@ -37,6 +39,10 @@ function Bar: OnEnable ()
     border:SetPoint("TOPLEFT", container, "TOPLEFT", -4, 4)
     border:SetPoint("BOTTOMRIGHT", container, "BOTTOMRIGHT", 4, -4)
     border:SetFrameLevel(container:GetFrameLevel() + 3)
+    border:SetBackdrop({
+        edgeSize = 16,
+        edgeFile = Options.BORDER[defaults.borderTexture],
+    })
 
     local textcontainer = CreateFrame("Frame", nil, container)
     textcontainer:SetPoint("TOPLEFT", container, "TOPLEFT", 0, 0)
@@ -45,15 +51,17 @@ function Bar: OnEnable ()
 
     local text = textcontainer:CreateFontString(nil, "OVERLAY")
     text:SetPoint("CENTER", 0, 0)
+    text:SetFont(Options.FONT[defaults.textFont], defaults.textSize, "OUTLINE")
 
     local extratext = textcontainer:CreateFontString(nil, "OVERLAY")
     extratext:SetPoint("LEFT", text, "RIGHT", 0, 0)
+    extratext:SetFont(Options.FONT[defaults.textFont], defaults.textSize, "OUTLINE")
 
     extratext.animGroup = extratext:CreateAnimationGroup()
 
     local lock = CreateFrame("Frame", nil, container)
-    lock:SetPoint("TOPLEFT", container, "TOPLEFT", -8, 8)
-    lock:SetPoint("BOTTOMRIGHT", container, "BOTTOMRIGHT", 8, -8)
+    lock:SetPoint("TOPLEFT", container, "TOPLEFT", -4, 4)
+    lock:SetPoint("BOTTOMRIGHT", container, "BOTTOMRIGHT", 4, -4)
     lock:SetFrameLevel(container:GetFrameLevel() + 5)
     lock:EnableMouse(false)
     lock:Hide()
@@ -75,11 +83,10 @@ function Bar: OnEnable ()
 
     self:ApplyOptions()
     self:RegisterEvent("PLAYER_XP_UPDATE", "Update")
-    self:RegisterEvent("PLAYER_ENTERING_WORLD", "Update")
     self:RegisterMessage(Options.OPTION_CHANGED_MESSAGE, "ApplyOptions")
     self:RegisterMessage(Options.OPTION_CENTER_HOR_MESSAGE, "CenterHorizontally")
     self:RegisterMessage(Options.OPTION_CENTER_VER_MESSAGE, "CenterVertically")
-    
+
     self.PREVIEW_XP = 500
     self.PREVIEW_XPMAX = 1000
 
@@ -108,9 +115,9 @@ function Bar: ApplyOptions ()
         bar.container:Hide()
         return
     end
-        
+    
     bar.container:Show()
-
+        
     if db.isLocked then
         bar.lock:Hide()
         bar.container:SetMovable(false)
@@ -129,20 +136,34 @@ function Bar: ApplyOptions ()
     bar.container.bg:SetTexture(db.bgColor.r, db.bgColor.g, db.bgColor.b, db.bgColor.a)
     
     --- border
+    local edgeSize = 16
+    local isSizeMin = db.width <= 16 or db.height <= 16
+    
+    if isSizeMin then
+        edgeSize = 12
+        bar.border:SetPoint("TOPLEFT", bar.container, "TOPLEFT", -3, 3)
+        bar.border:SetPoint("BOTTOMRIGHT", bar.container, "BOTTOMRIGHT", 3, -3)
+    else
+        bar.border:SetPoint("TOPLEFT", bar.container, "TOPLEFT", -4, 4)
+        bar.border:SetPoint("BOTTOMRIGHT", bar.container, "BOTTOMRIGHT", 4, -4)
+    end
+
     bar.border:SetBackdrop({
-        edgeSize = 16,
+        edgeSize = edgeSize,
         edgeFile = Options.BORDER[db.borderTexture],
-        insets = { left = 4, right = 4, top = 4, bottom = 4 }
     })
     bar.border:SetBackdropBorderColor(db.borderColor.r, db.borderColor.g, db.borderColor.b, db.borderColor.a)
 
     --- status
     local value = bar.status:GetValue()
     local min, max = bar.status:GetMinMaxValues()
-
+    
+    bar.status:SetMinMaxValues(0, 0)
+    bar.status:SetValue(0)
+    
     bar.status:SetStatusBarTexture(Options.STATUSBAR[db.barTexture])
     bar.status:GetStatusBarTexture():SetVertexColor(db.barColor.r, db.barColor.g, db.barColor.b, db.barColor.a)
-
+    
     bar.status:SetMinMaxValues(min, max)
     bar.status:SetValue(value)
 
@@ -166,6 +187,7 @@ function Bar: ApplyOptions ()
 end
 
 function Bar: Update(event)
+    if ExperienceBar.db.profile.isHidden then return end
     
     local text
     local xp = nil
@@ -200,16 +222,15 @@ function Bar: Update(event)
     bar.text:SetText(text)
     bar.status:SetMinMaxValues(0, xpmax)
     bar.status:SetValue(xp)
-
 end
 
 function Bar: ExtraUpdate()
-
     if not ExperienceBar.db.profile.isExtraEnabled then return end
 
     local xp = nil
     local xpmax = nil
     local status = self.bar.status
+    local container = self.bar.container
     local extratext = self.bar.extratext
     local extrastatus = self.bar.extrastatus
 
@@ -234,11 +255,11 @@ function Bar: ExtraUpdate()
     local textDisplayAs = ExperienceBar.db.profile.textDisplayAs
 
     if extrastatus.xpmax_prev == xpmax then
-        extrastatus_offset = status:GetWidth() * (extrastatus.xpprev / extrastatus.xpmax_prev)
-        extrastatus_width = status:GetWidth() * ((xp - extrastatus.xpprev) / extrastatus.xpmax_prev)
+        extrastatus_offset = container:GetWidth() * (extrastatus.xpprev / extrastatus.xpmax_prev)
+        extrastatus_width = container:GetWidth() * ((xp - extrastatus.xpprev) / extrastatus.xpmax_prev)
     else
         extrastatus_offset = 0
-        extrastatus_width = status:GetWidth() * (xp / xpmax)
+        extrastatus_width = container:GetWidth() * (xp / xpmax)
         xp = xp + xpmax
     end
 
@@ -276,12 +297,13 @@ function Bar: ExtraUpdate()
         if not extratext.alphaAnim then
             extratext.alphaAnim = extratext.animGroup:CreateAnimation("Alpha")
             extratext.alphaAnim:SetChange(-1)
-            extratext.alphaAnim:SetDuration(3)
+            extratext.alphaAnim:SetStartDelay(1)
+            extratext.alphaAnim:SetDuration(2)
             extratext.alphaAnim:SetSmoothing("IN_OUT")
         end
         if not extratext.translationAnim then
             extratext.translationAnim = extratext.animGroup:CreateAnimation("Translation")
-            extratext.translationAnim:SetOffset(10, 0)
+            extratext.translationAnim:SetOffset(13, 0)
             extratext.translationAnim:SetDuration(3)
             extratext.translationAnim:SetSmoothing("IN_OUT")
         end
@@ -292,14 +314,15 @@ function Bar: ExtraUpdate()
     if not extrastatus.timer then
         extrastatus.timer = self:ScheduleTimer(onTimerEnd, 3)
     else
-        self:CancelTimer(extrastatus.timer, true)
-        extrastatus.timer = self:ScheduleTimer(onTimerEnd, 3)
-        if extrastatus.scaleAnim then 
-            extratext.animGroup:Stop()
-            extrastatus.animGroup:Stop()
+        if not self.isPreviewEnabled then
+            self:CancelTimer(extrastatus.timer, true)
+            extrastatus.timer = self:ScheduleTimer(onTimerEnd, 3)
+            if extrastatus.scaleAnim then 
+                extratext.animGroup:Stop()
+                extrastatus.animGroup:Stop()
+            end
         end
     end
-      
 end
 
 function Bar: StopAnimation ()

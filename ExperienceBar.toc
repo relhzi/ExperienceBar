@@ -1,5 +1,5 @@
 ## Interface: 30300
-## Version: 1.0.0
+## Version: 1.0.1
 
 ## Title: Experience Bar
 ## Author: Relhzi
