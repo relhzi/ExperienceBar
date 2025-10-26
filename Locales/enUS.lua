@@ -1,0 +1,36 @@
+local L = LibStub("AceLocale-3.0"):NewLocale("ExperienceBar", "enUS", true)
+
+--- OPTIONS
+L["OPTIONS"]                    = "Options"
+
+L["OPTION_GENERAL"]             = "General"
+L["OPTION_LOCK"]                = "Lock"
+L["OPTION_HIDE"]                = "Hide"
+L["OPTION_EXTRA"]               = "Extra bar & text"
+L["DESC_COMMANDS"]              = "Chat commands – |cffffff00/eb|r, |cffffff00/expbar|r, |cffffff00/experiencebar|r."
+
+L["OPTION_DESIGN"]              = "Design"
+L["OPTION_COLORS"]              = "Colors"
+L["OPTION_TEXT_COLOR"]          = "Text color"
+L["OPTION_BAR_COLOR"]           = "Bar color"
+L["OPTION_BORDER_COLOR"]        = "Border color"
+L["OPTION_BG_COLOR"]            = "Background color"
+L["DESC_EXTRA"]                 = "When you gain experience, an extra animated bar and text will appear to show how much experience you’ve earned."
+L["OPTION_EXTRA_TEXT_COLOR"]    = "Extra text color"
+L["OPTION_EXTRA_BAR_COLOR"]     = "Extra bar color"
+L["OPTION_TEXT_FONT"]           = "Text font"
+L["OPTION_TEXT_SIZE"]           = "Text size"
+L["OPTION_DISPLAY_AS"]          = "Display as"
+L["OPTION_DISPLAY_NUMBER"]      = "Number"
+L["OPTION_DISPLAY_PERCENT"]     = "Percent"
+L["OPTION_DISPLAY_NONE"]        = "None"
+L["OPTION_BAR_TEXTURE"]         = "Bar texture"
+L["OPTION_BORDER_TEXTURE"]      = "Border texture"
+
+L["OPTION_POSITION"]            = "Size & Position"
+L["OPTION_WIDTH"]               = "Width"
+L["OPTION_HEIGHT"]              = "Height"
+L["OPTION_POSITION_X"]          = "Position X"
+L["OPTION_POSITION_Y"]          = "Position Y"
+L["OPTION_CENTER_VER"]          = "Center vertically"
+L["OPTION_CENTER_HOR"]          = "Center horizontally"

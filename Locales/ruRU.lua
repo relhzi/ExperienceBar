@@ -1,0 +1,36 @@
+local L = LibStub("AceLocale-3.0"):NewLocale("ExperienceBar", "ruRU")
+
+--- OPTIONS
+L["OPTIONS"]                    = "Настройки" 
+
+L["OPTION_GENERAL"]             = "Основное"
+L["OPTION_LOCK"]                = "Закрепить"
+L["OPTION_HIDE"]                = "Скрыть"
+L["OPTION_EXTRA"]               = "Доп. полоса и текст"
+L["DESC_COMMANDS"]              = "Команды чата – |cffffff00/eb|r, |cffffff00/expbar|r, |cffffff00/experiencebar|r."
+
+L["OPTION_DESIGN"]              = "Оформление"
+L["OPTION_COLORS"]              = "Цвета"
+L["OPTION_TEXT_COLOR"]          = "Цвет текста"
+L["OPTION_BAR_COLOR"]           = "Цвет полосы"
+L["OPTION_BORDER_COLOR"]        = "Цвет рамки"
+L["OPTION_BG_COLOR"]            = "Цвет фона"
+L["DESC_EXTRA"]                 = "При получении опыта будут появляться анимированные полоса и текст, уведомляющие о количестве полученного опыта."
+L["OPTION_EXTRA_TEXT_COLOR"]    = "Цвет доп. текста"
+L["OPTION_EXTRA_BAR_COLOR"]     = "Цвет доп. полосы"
+L["OPTION_TEXT_FONT"]           = "Шрифт"
+L["OPTION_TEXT_SIZE"]           = "Размер текста"
+L["OPTION_DISPLAY_AS"]          = "Отображать как"
+L["OPTION_DISPLAY_NUMBER"]      = "Число"
+L["OPTION_DISPLAY_PERCENT"]     = "Процент"
+L["OPTION_DISPLAY_NONE"]        = "Не отображать"
+L["OPTION_BAR_TEXTURE"]         = "Полоса"
+L["OPTION_BORDER_TEXTURE"]      = "Рамка"
+
+L["OPTION_POSITION"]            = "Размер и позиция"
+L["OPTION_WIDTH"]               = "Ширина"
+L["OPTION_HEIGHT"]              = "Высота"
+L["OPTION_POSITION_X"]          = "Позиция по Х"
+L["OPTION_POSITION_Y"]          = "Позиция по Y"
+L["OPTION_CENTER_VER"]          = "Вертикально по центру"
+L["OPTION_CENTER_HOR"]          = "Горизонтально по центру"
