@@ -214,7 +214,6 @@ function Bar: Update(event)
         text = string.format("%.1f%%", xp * 100 / xpmax)
     end
 
-
     if event == "PLAYER_XP_UPDATE" or self.isPreviewEnabled then
         self:ExtraUpdate()
     end
@@ -260,7 +259,7 @@ function Bar: ExtraUpdate()
     else
         extrastatus_offset = 0
         extrastatus_width = container:GetWidth() * (xp / xpmax)
-        xp = xp + xpmax
+        xp = xp + extrastatus.xpmax_prev
     end
 
     if textDisplayAs == "PERCENT" then
@@ -272,8 +271,10 @@ function Bar: ExtraUpdate()
     end
 
     extratext:SetText(text)
-    extrastatus:SetPoint("LEFT", extrastatus_offset, 0)
-    extrastatus:SetWidth(extrastatus_width)
+    extrastatus:ClearAllPoints()
+    extrastatus:SetWidth(extrastatus_width + 1)
+    extrastatus:SetPoint("TOPLEFT", extrastatus_offset, 0)
+    extrastatus:SetPoint("BOTTOMLEFT", extrastatus_offset, 0)
 
     extratext:Show()
     extrastatus:Show()
@@ -317,7 +318,7 @@ function Bar: ExtraUpdate()
         if not self.isPreviewEnabled then
             self:CancelTimer(extrastatus.timer, true)
             extrastatus.timer = self:ScheduleTimer(onTimerEnd, 3)
-            if extrastatus.scaleAnim then 
+            if extrastatus.animGroup then 
                 extratext.animGroup:Stop()
                 extrastatus.animGroup:Stop()
             end
